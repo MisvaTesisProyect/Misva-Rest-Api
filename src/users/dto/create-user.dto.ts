@@ -1,16 +1,16 @@
-import { IsEmail, IsString } from "class-validator"
+import { IsEmail, IsOptional, IsString } from "class-validator"
 
 export class CreateUserDto {
     @IsString()
-    name: string
+    name!: string
 
     @IsString()
-    last_name: string
+    last_name!: string
 
     @IsEmail()
-    email: string
+    email!: string
 
     @IsString()
-    password: string | any
+    password!: string | any
 
 }
