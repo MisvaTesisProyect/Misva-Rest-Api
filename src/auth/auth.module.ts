@@ -4,7 +4,6 @@ import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
-import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 import { UsersService } from 'src/users/service/users.service';
@@ -21,7 +20,7 @@ import { User } from 'src/users/entities/user.entity';
     }),
     TypeOrmModule.forFeature([User])
   ],
-  providers: [AuthService,LocalStrategy,JwtStrategy,UsersService],
+  providers: [AuthService,JwtStrategy,UsersService],
   exports: [JwtModule],
   controllers: [AuthController],
 })

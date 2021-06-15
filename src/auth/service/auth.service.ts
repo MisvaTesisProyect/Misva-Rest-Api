@@ -19,7 +19,10 @@ export class AuthService {
   }
 
   async login(user: any) {
-    
+    const isValid = await this.validateUser(user.email,user.password)
+    if(!isValid){
+      return null
+    }  
     const payload = { username: user.email, sub: user.userId };
     return {
       access_token: this.jwtService.sign(payload),

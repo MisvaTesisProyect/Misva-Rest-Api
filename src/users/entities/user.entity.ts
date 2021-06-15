@@ -1,7 +1,8 @@
 import { IsBoolean, IsDate, IsEmail, IsNumber, IsString } from "class-validator";
-import { Column, CreateDateColumn, Entity, UpdateDateColumn, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, UpdateDateColumn, PrimaryGeneratedColumn, BaseEntity, OneToOne, JoinColumn, Unique } from "typeorm";
 import  {Role} from 'src/roles/entities/role.entity'
 @Entity()
+@Unique(['email'])
 export class User{
     @IsNumber()
     @PrimaryGeneratedColumn()
