@@ -18,4 +18,8 @@ export class CreateCategoryDto {
     @IsNumber()
     id_parent?: number | Category
 
+    @IsOptional()
+    @IsBoolean()
+    active?: boolean
+
 }
