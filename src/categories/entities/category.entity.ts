@@ -14,10 +14,10 @@ export class Category {
 
     @IsNumber()
     @ManyToOne(type => Category, category => category.id, {
-        onDelete: 'SET NULL'
-    },)
+        onDelete: 'SET NULL',
+        nullable: true,
+    })
     @JoinColumn({name: 'id_parent'})
-    @Column({default:0})
     id_parent: number | Category
 
     @IsString()

@@ -31,7 +31,7 @@ export class Product {
 
     @IsDecimal()
     @MaxLength(10.2)
-    @Column({length: 10.2})
+    @Column()
     price: number
 
     @IsNumber()
