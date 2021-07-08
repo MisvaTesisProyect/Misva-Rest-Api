@@ -1,5 +1,6 @@
 import { IsBoolean, IsDate, IsDecimal, IsNumber, IsString, MaxLength, maxLength } from "class-validator";
 import { Category } from "src/categories/entities/category.entity";
+import { Manufacturer } from "src/manufacturer/entities/manufacturer.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
 @Entity()
@@ -24,10 +25,21 @@ export class Product {
     @Column({length:25})
     reference: string
 
+    /**
+     * Categoria
+     */
     @IsNumber()
     @OneToMany(()=> Category, category => category.id)
     @JoinColumn({name: 'id_category'})
     id_category: number
+
+    /** 
+     * Marca
+     */
+    @IsNumber()
+    @OneToMany(()=>Manufacturer, manufacturer => manufacturer.id)
+    @JoinColumn({name:'id_manufacturer'})
+    id_manufacturer: number
 
     @IsDecimal()
     @MaxLength(10.2)
