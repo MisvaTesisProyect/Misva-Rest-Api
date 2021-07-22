@@ -3,7 +3,7 @@ import { getRepository, Repository } from 'typeorm';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { UpdateCategoryDto } from '../dto/update-category.dto';
 import { Category } from '../entities/category.entity';
-import { paginate,Pagination,IPaginationOptions,} from 'nestjs-typeorm-paginate'
+import { paginate,paginateRaw,Pagination,IPaginationOptions,} from 'nestjs-typeorm-paginate'
 import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class CategoriesService {
@@ -16,7 +16,7 @@ export class CategoriesService {
     }
   }
   async findCategoryByPaginations(options:IPaginationOptions): Promise<Pagination<Category>|any>{
-    return await paginate<Category>(getRepository(Category), options)
+    return await paginate<Category>(getRepository(Category), options, {relations:['parent']})
   }
   async findAll(): Promise<Category | any> {
     try {
@@ -36,8 +36,7 @@ export class CategoriesService {
   async findOne(id: number): Promise<Category | any> {
     try {
       return await  getRepository(Category)
-                      .find({where:{id:id},
-                            relations:['parent']})
+                      .find({where:{id:id}})
                       .then(res => {return res})
 
     } catch (error) {
