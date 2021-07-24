@@ -5,6 +5,7 @@ import { Category } from '../entities/category.entity';
 export class CreateCategoryDto {
     @IsString()
     @IsDefined()
+    @IsNotEmpty()
     name!: string
 
     @IsOptional()

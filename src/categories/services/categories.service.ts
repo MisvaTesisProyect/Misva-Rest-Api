@@ -16,7 +16,11 @@ export class CategoriesService {
     }
   }
   async findCategoryByPaginations(options:IPaginationOptions): Promise<Pagination<Category>|any>{
-    return await paginate<Category>(getRepository(Category), options, {relations:['parent']})
+    return await paginate<Category>(
+      getRepository(Category), 
+      options, 
+      {relations:['parent']}
+    )
   }
   async findAll(): Promise<Category | any> {
     try {
@@ -36,7 +40,7 @@ export class CategoriesService {
   async findOne(id: number): Promise<Category | any> {
     try {
       return await  getRepository(Category)
-                      .find({where:{id:id}})
+                      .find({where:{id:id}, relations:['parent']})
                       .then(res => {return res})
 
     } catch (error) {
@@ -68,10 +72,11 @@ export class CategoriesService {
   async remove(id: number):Promise<Category|any> {
    try {
     return await getRepository(Category)
-    .createQueryBuilder("category")
+    .createQueryBuilder()
     .delete()
     .from(Category)
     .where("id=:id",{id:id})
+    .execute()
    } catch (error) {
      return error
    }

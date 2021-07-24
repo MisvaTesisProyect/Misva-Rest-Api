@@ -10,6 +10,7 @@ export class Category {
     id: number
 
     @IsString()
+    @Column({nullable:false})
     name: string
 
     @IsNumber()
@@ -47,7 +48,7 @@ export class Category {
     /**
      * Creo una relacion Categoria (id) -> Categoria(id_parent)
      */
-    @OneToMany(() => Category, category => category.id_parent, { cascade: true })
+    @OneToMany(() => Category, category => category.id_parent, { onDelete: 'SET NULL' })
     parent: Category[]
 
     /**
