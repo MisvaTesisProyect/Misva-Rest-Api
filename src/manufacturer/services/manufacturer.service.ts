@@ -1,26 +1,103 @@
 import { Injectable } from '@nestjs/common';
+import { paginate, IPaginationOptions, } from 'nestjs-typeorm-paginate'
+import { getRepository } from 'typeorm';
 import { CreateManufacturerDto } from '../dto/create-manufacturer.dto';
 import { UpdateManufacturerDto } from '../dto/update-manufacturer.dto';
+import { Manufacturer } from '../entities/manufacturer.entity';
 
 @Injectable()
 export class ManufacturerService {
-  create(createManufacturerDto: CreateManufacturerDto) {
-    return 'This action adds a new manufacturer';
+
+  /**
+   * 
+   * @param createManufacturerDto Manufacturer body
+   * @returns new manufacturer
+   */
+  async create(createManufacturerDto: CreateManufacturerDto): Promise<Manufacturer> {
+    try {
+      return await getRepository(Manufacturer)
+        .save(createManufacturerDto)
+    } catch (error) {
+      return error
+    }
   }
 
-  findAll() {
-    return `This action returns all manufacturer`;
+  /**
+   * 
+   * @returns Manufacturer array
+   */
+  async findAll(): Promise<Manufacturer[]> {
+    try {
+      return await getRepository(Manufacturer).find().then(res => { return res })
+    } catch (error) {
+      return error
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} manufacturer`;
+  /**
+   * 
+   * @param options params
+   * @returns items paginados
+   */
+  async manufacturerPaginate(options: IPaginationOptions): Promise<Manufacturer[] | any> {
+    try {
+      return await paginate<Manufacturer>(
+        getRepository(Manufacturer),
+        options
+      )
+    } catch (error) {
+      return error
+    }
   }
 
-  update(id: number, updateManufacturerDto: UpdateManufacturerDto) {
-    return `This action updates a #${id} manufacturer`;
+  /**
+   * 
+   * @param id int 
+   * @returns Manufacturer array
+   */
+  async findOne(id: number): Promise<Manufacturer[]> {
+    try {
+      return await getRepository(Manufacturer)
+        .find({ where: { id: id } })
+        .then(res => { return res })
+    } catch (error) {
+      return error
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} manufacturer`;
+  /**
+   * 
+   * @param id int
+   * @param updateManufacturerDto Manufacturer body
+   * @returns status
+   */
+  async update(id: number, updateManufacturerDto: UpdateManufacturerDto): Promise<Manufacturer[] | any> {
+    try {
+      return await getRepository(Manufacturer)
+        .createQueryBuilder("manufacturer")
+        .update(updateManufacturerDto)
+        .where("id = :id", { id: id })
+        .execute()
+    } catch (error) {
+      return error
+    }
+  }
+
+  /**
+   * 
+   * @param id int 
+   * @returns status
+   */
+  async remove(id: number): Promise<Manufacturer[] | any> {
+    try {
+      return await getRepository(Manufacturer)
+        .createQueryBuilder()
+        .delete()
+        .from(Manufacturer)
+        .where("id=:id", { id: id })
+        .execute()
+    } catch (error) {
+      return error
+    }
   }
 }

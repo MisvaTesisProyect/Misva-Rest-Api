@@ -27,7 +27,7 @@ export class CategoriesController {
   @Get('paginate')
   async paginate(
     @Body('page', new DefaultValuePipe(1), ParseIntPipe) page:number = 1,
-    @Body('limit', new DefaultValuePipe(20), ParseIntPipe) limit:number = 20
+    @Body('limit', new DefaultValuePipe(100), ParseIntPipe) limit:number = 100
   ):Promise<Pagination<Category>|any>{
     /** 
      * ? el limite maximo que va a tolerar va a ser 100, en caso que se necesite mas modificar.

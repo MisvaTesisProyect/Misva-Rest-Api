@@ -10,7 +10,7 @@ export class Manufacturer {
 
     @IsString()
     @MaxLength(25)
-    @Column({length:25})
+    @Column({length:25, nullable: false})
     name: string
 
     @IsString()
