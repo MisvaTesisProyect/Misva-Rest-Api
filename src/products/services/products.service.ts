@@ -1,26 +1,100 @@
 import { Injectable } from '@nestjs/common';
+import { getRepository } from 'typeorm';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
+import { Product } from '../entities/product.entity';
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  
+  /**
+   * 
+   * @param createProductDto body product
+   * @returns product created
+   */
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    try {
+      return await getRepository(Product).save(createProductDto)
+    } catch (error) {
+      return error
+    }
   }
 
-  findAll() {
-    return `This action returns all products`;
+  /**
+   * 
+   * @returns Products
+   */
+  async findAll(): Promise<Product[]> {
+    try {
+      return await getRepository(Product)
+        .find(
+          {
+            where: {
+              active: true
+            },
+            relations: [
+              'category',
+              'manufacturer',
+            ]
+          })
+    } catch (error) {
+      return error
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  /**
+   * 
+   * @param id int
+   * @returns one product
+   */
+  async findOne(id: number): Promise<Product[]> {
+    try {
+      return await getRepository(Product)
+        .find({
+          where: { id: id },
+          relations: [
+            'category',
+            'manufacturer'
+          ]
+        })
+    } catch (error) {
+      return error
+    }
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  /**
+   * 
+   * @param id int
+   * @param updateProductDto body product update
+   * @returns status
+   */
+  async update(id: number, updateProductDto: UpdateProductDto):Promise<any> {
+    try {
+      return await getRepository(Product)
+        .createQueryBuilder('product')
+        .update(updateProductDto)
+        .where("id = :id", { id: id })
+        .execute()
+    } catch (error) {
+      return error
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  /**
+   * 
+   * @param id int
+   * @returns status
+   */
+  async remove(id: number): Promise<any> {
+    try {
+      return await getRepository(Product)
+        .createQueryBuilder()
+        .delete()      
+        .from(Product)
+        .where("id = :id", {id : id})
+        .execute()
+    } catch (error) {
+      return error
+    }
   }
 }
