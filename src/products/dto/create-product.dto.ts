@@ -17,6 +17,10 @@ export class CreateProductDto {
     @IsOptional()
     @IsNumber()
     id_category: number
+   
+    @IsOptional()
+    @IsNumber()
+    id_manufacturer: number
 
     @IsOptional()
     @MaxLength(10.2)

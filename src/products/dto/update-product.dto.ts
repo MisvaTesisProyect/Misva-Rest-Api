@@ -22,6 +22,10 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
     id_category: number
 
     @IsOptional()
+    @IsNumber()
+    id_manufacturer: number
+
+    @IsOptional()
     @MaxLength(10.2)
     @IsDecimal()
     price: number
