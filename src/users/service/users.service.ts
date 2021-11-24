@@ -7,51 +7,46 @@ import { User } from '../entities/user.entity';
 
 @Injectable()
 export class UsersService {
-
   constructor(
     @InjectRepository(User)
-    private readonly userRepo : Repository<User>
-  ){
-
-  }
+    private readonly userRepo: Repository<User>,
+  ) {}
   /**
-   * 
+   *
    * @param createUserDto campos del usuario a crear
-   * @returns 
+   * @returns
    */
-  async create(createUserDto: CreateUserDto):Promise<any> {
+  async create(createUserDto: CreateUserDto): Promise<any> {
     try {
       return getRepository(User)
-            .save(createUserDto)
-            .then(res => {
-              return res
-            })
+        .save(createUserDto)
+        .then((res) => {
+          return res;
+        });
     } catch (error) {
-      return error
+      return error;
     }
   }
 
-   async findAll() {
+  async findAll() {
     return `This action returns all users`;
   }
 
- async findOne(id: number) {
+  async findOne(id: number) {
     return await this.userRepo.findOne(id);
   }
 
-  async findByemail(email : string) {
+  async findByemail(email: string) {
     return await this.userRepo.findOne({
-      where :
-      { email }
-    })
+      where: { email },
+    });
   }
 
- async update(id: number, updateUserDto: UpdateUserDto) {
-    return await this.userRepo.update(id,updateUserDto);
-    
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return await this.userRepo.update(id, updateUserDto);
   }
 
   async remove(id: number) {
-    return await this.userRepo.delete(id)
+    return await this.userRepo.delete(id);
   }
 }

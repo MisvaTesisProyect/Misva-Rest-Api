@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { IsBoolean, IsDefined, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Category } from '../entities/category.entity';
 
@@ -6,22 +5,23 @@ export class CreateCategoryDto {
     @IsString()
     @IsDefined()
     @IsNotEmpty()
-    name!: string
+    @IsNotEmpty()
+    name: string
 
     @IsOptional()
     @IsString()
-    description!: string
+    description: string
     
     @IsOptional()
     @IsString()
     imagen?: string
-  
+
     @IsOptional()
     @IsNumber()
     id_parent?: number | Category
 
     @IsOptional()
     @IsBoolean()
-    active?: boolean
+    active: boolean
 
 }

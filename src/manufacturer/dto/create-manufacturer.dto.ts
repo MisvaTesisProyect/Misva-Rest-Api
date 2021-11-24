@@ -1,8 +1,9 @@
-import { IsBoolean, IsDefined, IsOptional, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsDefined, IsNotEmpty, IsOptional, IsString, MaxLength } from "class-validator";
 
 export class CreateManufacturerDto {
     @IsDefined()
     @IsString()
+    @IsNotEmpty()
     name: string
 
     @IsOptional()

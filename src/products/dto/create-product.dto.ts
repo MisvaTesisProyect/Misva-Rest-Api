@@ -1,9 +1,10 @@
-import { IsBoolean, IsDecimal, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
+import { IsBoolean, IsDecimal, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 
 export class CreateProductDto {
     @IsString()
     @MaxLength(50)
-    name!: string
+    @IsNotEmpty()
+    name: string
 
     @IsOptional()
     @IsString()
@@ -12,6 +13,7 @@ export class CreateProductDto {
 
     @MaxLength(25)
     @IsString()
+    @IsNotEmpty()
     reference!: string
 
     @IsOptional()
